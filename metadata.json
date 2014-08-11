@@ -1,0 +1,10 @@
+{
+  "name": "puppet-memcached",
+  "version": "0.0.1",
+  "source": "git://github.com/alessani/puppet-memcached",
+  "author": "Matteo Alessani",
+  "license": "Apache",
+  "summary": "Manage memcached",
+  "description": "Manage memcached",
+  "dependencies": []
+}
