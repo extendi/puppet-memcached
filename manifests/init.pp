@@ -6,7 +6,8 @@ class memcached (
   $address = '0.0.0.0'
 ) {
   package {'memcached':
-    ensure => installed,
+    ensure => present,
+    before => Tidy['/etc/init.d/memcached'],
   }
 
   tidy { '/etc/init.d/memcached':
