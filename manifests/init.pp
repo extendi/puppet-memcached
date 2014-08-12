@@ -26,7 +26,7 @@ class memcached (
     respawn => true,
     respawn_limit => '5 10',
     user => 'memcache',
-    exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn -I 1",
+    exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn",
   }
 
   Package['memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> Upstart::Job['memcached']
