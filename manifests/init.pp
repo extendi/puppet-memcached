@@ -26,6 +26,7 @@ class memcached (
     respawn => true,
     respawn_limit => '5 10',
     user => 'memcache',
+    ensure => present,
     exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn",
   }
 
