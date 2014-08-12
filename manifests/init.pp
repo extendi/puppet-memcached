@@ -18,7 +18,7 @@ class memcached (
     command => "/usr/sbin/update-rc.d -f memcached remove"
   }
 
-  file { '/etc/init.d/memcached':
+  file { '/etc/init.d/./memcached':
     ensure => absent
   }
 
