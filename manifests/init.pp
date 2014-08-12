@@ -5,14 +5,16 @@ class memcached (
   $cachesize = '64',
   $address = '0.0.0.0'
 ) {
+
   package {'memcached':
     ensure => present,
-    before => Tidy['/etc/init.d/memcached'],
   }
 
-  tidy { '/etc/init.d/memcached':
-    require => Package['memcached']
+  exec {'memcached stopped':
+    command => "/etc/init.d/memcached stop"
   }
+
+  tidy { '/etc/init.d/memcached': }
 
   include upstart
   upstart::job { 'memcached':
@@ -22,6 +24,11 @@ class memcached (
     respawn_limit => '5 10',
     user => 'memcache',
     exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn -I 1",
-    require => Tidy['/etc/init.d/memcached'],
   }
+
+  service{'memcached':
+    ensure => running
+  }
+
+  Package['memcached'] -> Service['memcached stopped'] -> Tidy['/etc/init.d/memcached'] -> Upstart::Job['memcached'] -> Service['memcached']
 }
