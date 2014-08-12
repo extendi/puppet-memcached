@@ -15,7 +15,7 @@ class memcached (
   }
 
   exec {'remove memcached from rc.d':
-    command => "update-rc.d -f memcached remove"
+    command => "/usr/sbin/update-rc.d -f memcached remove"
   }
 
   file { '/etc/init.d/memcached':
