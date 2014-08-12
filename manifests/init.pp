@@ -18,6 +18,7 @@ class memcached (
     command => "/usr/sbin/update-rc.d -f memcached remove"
   }
 
+  # hack to not create dependency cycle
   file { '/etc/init.d/./memcached':
     ensure => absent
   }
@@ -32,5 +33,5 @@ class memcached (
     exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn -I 1",
   }
 
-  Package['memcached'] -> Exec['memcached stopped'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/memcached'] -> Upstart::Job['memcached']
+  Package['memcached'] -> Exec['memcached stopped'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> Upstart::Job['memcached']
 }
