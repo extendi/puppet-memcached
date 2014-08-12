@@ -1,9 +1,9 @@
 class memcached {
-  package {'memcached',
+  package {'memcached':
     ensure => installed,
   }
 
-  tidy { '/etc/init.d/memcached',
+  tidy { '/etc/init.d/memcached':
     require => Package['memcached']
   }
 
