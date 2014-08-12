@@ -14,7 +14,13 @@ class memcached (
     command => "/etc/init.d/memcached stop"
   }
 
-  tidy { '/etc/init.d/memcached': }
+  exec {'remove memcached from rc.d':
+    command => "update-rc.d -f memcached remove"
+  }
+
+  file { '/etc/init.d/memcached':
+    ensure => absent
+  }
 
   include upstart
   upstart::job { 'memcached':
@@ -26,5 +32,5 @@ class memcached (
     exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn -I 1",
   }
 
-  Package['memcached'] -> Exec['memcached stopped'] -> Tidy['/etc/init.d/memcached'] -> Upstart::Job['memcached']
+  Package['memcached'] -> Exec['memcached stopped'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/memcached'] -> Upstart::Job['memcached']
 }
