@@ -26,5 +26,5 @@ class memcached (
     exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn -I 1",
   }
 
-  Package['memcached'] -> Service['memcached stopped'] -> Tidy['/etc/init.d/memcached'] -> Upstart::Job['memcached']
+  Package['memcached'] -> Exec['memcached stopped'] -> Tidy['/etc/init.d/memcached'] -> Upstart::Job['memcached']
 }
