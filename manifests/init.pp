@@ -1,4 +1,10 @@
-class memcached {
+class memcached (
+  $port = '11211',
+  $user = 'memcache',
+  $maxconn = '1024',
+  $cachesize = '64',
+  $address = '0.0.0.0'
+) {
   package {'memcached':
     ensure => installed,
   }
@@ -14,7 +20,7 @@ class memcached {
     respawn => true,
     respawn_limit => '5 10',
     user => 'memcache',
-    exec => '/usr/bin/memcached -v -m 1024 -p 11211 -u memcache -l 0.0.0.0 -c 1024 -I 1',
+    exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn -I 1",
     require => Tidy['/etc/init.d/memcached'],
   }
 }
