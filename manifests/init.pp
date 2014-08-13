@@ -31,10 +31,11 @@ class memcached (
     content => template("${module_name}/memcached.conf.erb"),
   }
 
-  service {'memcached':
+  service {'start memcached':
+    name => 'memcached'
     ensure => running,
     provider => upstart
   }
 
-  Package['memcached'] -> Service['stop memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> File['/etc/init/memcached.conf'] -> Service['memcached']
+  Package['memcached'] -> Service['stop memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
 }
