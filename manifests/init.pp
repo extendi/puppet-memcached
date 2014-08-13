@@ -19,16 +19,16 @@ class memcached (
     ensure => absent
   }
 
-  include upstart
-  upstart::job { 'memcached':
-    description => "Memcached upstart",
-    version => "1.0",
-    respawn => true,
-    respawn_limit => '5 10',
-    user => 'memcache',
-    ensure => present,
-    exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn",
-  }
+  #include upstart
+  #upstart::job { 'memcached':
+  #  description => "Memcached upstart",
+  #  version => "1.0",
+  #  respawn => true,
+  #  respawn_limit => '5 10',
+  #  user => 'memcache',
+  #  ensure => present,
+  #  exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn",
+  #}
 
-  Package['memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> Upstart::Job['memcached']
+  Package['memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] # -> Upstart::Job['memcached']
 }
