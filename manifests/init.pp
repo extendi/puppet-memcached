@@ -19,16 +19,17 @@ class memcached (
     ensure => absent
   }
 
-  #include upstart
-  #upstart::job { 'memcached':
-  #  description => "Memcached upstart",
-  #  version => "1.0",
-  #  respawn => true,
-  #  respawn_limit => '5 10',
-  #  user => 'memcache',
-  #  ensure => present,
-  #  exec => "/usr/bin/memcached -v -m $cachesize -p $port -u $user -l $address -c $maxconn",
-  #}
+  file {'/etc/init/memcached.conf':
+    owner => 'root',
+    group => 'root',
+    mode => 'u=rw,go=r',
+    content => template("${module_name}/memcached.conf.erb"),
+  }
 
-  Package['memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] # -> Upstart::Job['memcached']
+  service {'memcached':
+    ensure => running,
+    provider => upstart
+  }
+
+  Package['memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] # -> File['/etc/init/memcached.conf'] -> Service['memcached']
 }

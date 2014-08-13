@@ -1,0 +1,18 @@
+# memcached - a distributed memory object caching system
+#
+# Memcached is an in-memory key-value store for small chunks of 
+# arbitrary data (strings, objects) from results of database calls, API calls
+
+description "a distributed memory object caching system"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 10 5
+
+console log
+
+setuid <%= @user %>
+
+exec /usr/bin/memcached -v -m <%= @cachesize %> -p <%= @port %> -u <%= @user %> -l <%= @address %> -c <%= @maxconn %>
