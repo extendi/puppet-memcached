@@ -19,6 +19,7 @@ class memcached (
     command => 'rm /etc/init.d/memcached',
     path => "/bin",
     refreshonly => true
+    notify => Exec['remove memcached from rc.d']
   }
 
   exec {'stop memcached':
@@ -41,5 +42,5 @@ class memcached (
     provider => upstart
   }
 
-  Package['memcached'] -> Exec['stop memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
+  Package['memcached'] -> Exec['stop memcached'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
 }
