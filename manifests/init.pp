@@ -32,7 +32,7 @@ class memcached (
   }
 
   service {'start memcached':
-    name => 'memcached'
+    name => 'memcached',
     ensure => running,
     provider => upstart
   }
