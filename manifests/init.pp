@@ -11,7 +11,8 @@ class memcached (
   }
 
   exec {'remove memcached from rc.d':
-    command => "/usr/sbin/update-rc.d -f memcached remove"
+    command => "/usr/sbin/update-rc.d -f memcached remove",
+    refershonly => true
   }
 
   # hack to not create dependency cycle
