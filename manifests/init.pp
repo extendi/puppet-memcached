@@ -15,7 +15,8 @@ class memcached (
   }
 
   # hack to not create dependency cycle
-  file { '/etc/init.d/./memcached':
+  file { 'remove config file':
+    path => '/etc/init.d/./memcached',
     ensure => absent,
   }
 
@@ -38,5 +39,5 @@ class memcached (
     provider => upstart
   }
 
-  Package['memcached'] -> Exec['stop memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
+  Package['memcached'] -> Exec['stop memcached'] -> Exec['remove memcached from rc.d'] -> File['remove config file'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
 }
