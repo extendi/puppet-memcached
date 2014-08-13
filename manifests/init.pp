@@ -23,7 +23,8 @@ class memcached (
   exec {'stop memcached':
     command => "/etc/init.d/memcached stop",
     path => "/root",
-    onlyif => '/bin/ls /etc/init.d/memcached'
+    onlyif => '/bin/ls /etc/init.d/memcached',
+    notify => Exec['remove config file']
   }
 
   file {'/etc/init/memcached.conf':
@@ -39,5 +40,5 @@ class memcached (
     provider => upstart
   }
 
-  Package['memcached'] -> Exec['stop memcached'] -> Exec['remove memcached from rc.d'] -> Exec['remove config file'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
+  Package['memcached'] -> Exec['stop memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
 }
