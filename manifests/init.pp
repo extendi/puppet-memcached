@@ -20,6 +20,7 @@ class memcached (
   }
 
   service {'stop memcached':
+    name => 'memcached',
     ensure => stopped
   }
 
