@@ -23,7 +23,7 @@ class memcached (
   exec {'stop memcached':
     command => "/etc/init.d/memcached stop",
     path => "/root",
-    onlyif => 'ls /etc/init.d/memcached'
+    onlyif => '/bin/ls /etc/init.d/memcached'
   }
 
   file {'/etc/init/memcached.conf':
