@@ -17,7 +17,8 @@ class memcached (
   # hack to not create dependency cycle
   exec { 'remove config file':
     command => 'rm /etc/init.d/memcached',
-    path => "/bin"
+    path => "/bin",
+    refreshonly => true
   }
 
   exec {'stop memcached':
