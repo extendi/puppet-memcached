@@ -35,5 +35,5 @@ class memcached (
     provider => upstart
   }
 
-  Package['memcached'] -> Exec['remove memcached from rc.d'] -> File['/etc/init.d/./memcached'] -> Service['stop memcached'] -> File['/etc/init/memcached.conf'] -> Service['memcached']
+  Package['memcached'] -> Exec['remove memcached from rc.d'] -> Service['stop memcached'] -> File['/etc/init.d/./memcached'] -> File['/etc/init/memcached.conf'] -> Service['memcached']
 }
