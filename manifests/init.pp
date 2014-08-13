@@ -18,7 +18,7 @@ class memcached (
   exec { 'remove config file':
     command => 'rm /etc/init.d/memcached',
     path => "/bin",
-    refreshonly => true
+    refreshonly => true,
     notify => Exec['remove memcached from rc.d']
   }
 
