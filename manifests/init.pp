@@ -43,5 +43,5 @@ class memcached (
     provider => upstart
   }
 
-  Package['memcached'] -> Exec['stop memcached'] -> File['/etc/init/memcached.conf'] -> Service['start memcached']
+  Package['memcached'] -> Exec['stop memcached'] -> Service['start memcached']
 }
