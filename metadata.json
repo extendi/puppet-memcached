@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-memcached",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "source": "git://github.com/alessani/puppet-memcached",
   "author": "Matteo Alessani",
   "license": "Apache",
