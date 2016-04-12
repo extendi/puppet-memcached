@@ -3,7 +3,8 @@ class memcached (
   $user = 'memcache',
   $maxconn = '1024',
   $cachesize = '64',
-  $address = '0.0.0.0'
+  $address = '0.0.0.0',
+  $memory = "5m"
 ) {
 
   package {'memcached':
